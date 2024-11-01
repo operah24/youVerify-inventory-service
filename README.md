@@ -56,7 +56,15 @@ Order Service: http://localhost:3000
 
 Each service requires its own set of environment variables. Below is an example of necessary variables:
 
-Inventory Service .env
+### Inventory Service .env
+
+PORT=
+
+MONGODB_URI=
+
+RABBITMQ_URI=
+
+### Order Service .env
 
 PORT=
 
@@ -66,18 +74,8 @@ RABBITMQ_URI=
 
 ELASTICSEARCH_URI=
 
-Inventory Service .env
-
-PORT=
-
-MONGODB_URI=
-
-RABBITMQ_URI=
-
-ELASTICSEARCH_URI=
-
-## Usuage
-# Inventory Service
+# Usuage
+## Inventory Service
 
 Add Item: POST inventory/item - Add a new item with initial stock details.
 
@@ -87,7 +85,7 @@ Add Stock: PUT inventory/item/:id/addStock - Add to stock of an item.
 
 Get Item Stock: GET inventory/item/:id - Retrieve the stock level of a specific item.
 
-# Order Service
+## Order Service
 
 Create Order: POST order/create - Place an order for an item.
 
