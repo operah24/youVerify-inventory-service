@@ -6,6 +6,7 @@ This project implements an e-commerce platform using two interdependent microser
 
 1. Inventory Service: Manages items and stock.
 2. Order Service: Handles customer orders, ensuring items are in stock.
+
 The services communicate asynchronously via RabbitMQ for event-based communication, are containerized with Docker, and log stock updates in Elasticsearch.
 
 ## Technologies Used
@@ -21,7 +22,9 @@ The services communicate asynchronously via RabbitMQ for event-based communicati
 # Prerequisites
 
 Node.js and npm installed
+
 Docker and Docker Compose installed
+
 MongoDB instance running (can be configured to run as a container)
 
 ## Running the Services
@@ -46,34 +49,48 @@ docker-compose up --build
 4. Verify: Once all containers are running, verify the services are live at:
 
 Inventory Service: http://localhost:3009
+
 Order Service: http://localhost:3000
 
 ## Environment Variables
 
 Each service requires its own set of environment variables. Below is an example of necessary variables:
+
 Inventory Service .env
+
 PORT=
+
 MONGODB_URI=
+
 RABBITMQ_URI=
+
 ELASTICSEARCH_URI=
 
 Inventory Service .env
+
 PORT=
+
 MONGODB_URI=
+
 RABBITMQ_URI=
+
 ELASTICSEARCH_URI=
 
 ## Usuage
 # Inventory Service
 
 Add Item: POST inventory/item - Add a new item with initial stock details.
+
 Deduct Stock: PUT inventory/item/:id/deductStock - Deduct the stock of an item.
+
 Add Stock: PUT inventory/item/:id/addStock - Add to stock of an item.
+
 Get Item Stock: GET inventory/item/:id - Retrieve the stock level of a specific item.
 
 # Order Service
 
 Create Order: POST order/create - Place an order for an item.
+
 Fetch Order Details: GET /order/:id - Retrieve details of an order.
 
 ## Event Communication
@@ -82,7 +99,9 @@ Event-based communication between the services uses RabbitMQ. Each service publi
 Stock Update Events:
 
 Publisher: Inventory Service
+
 Consumer: Order Service
+
 Purpose: Order Service listens to stock changes to keep logs up-to-date and verify stock on order placement.
 
 Order Events:
@@ -98,7 +117,9 @@ npm test
 This application follows domain-driven design (DDD) principles, ensuring each service has clearly defined roles, responsibilities, and boundaries. DDD is reflected in the following design choices:
 
 Inventory Bounded Context: The Inventory Service owns the item stock management and publishes events for any stock changes.
+
 Order Bounded Context: The Order Service is responsible for handling customer orders and queries stock availability from the Inventory Service.
+
 Event Communication Layer: Implements a messaging layer via RabbitMQ to facilitate domain event sharing without direct dependency between services.
 
 For additional questions or further development, please refer to the CONTRIBUTING.md file.
